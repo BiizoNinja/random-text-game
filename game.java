@@ -34,8 +34,8 @@ class game
             System.out.println("\t# A "+enemy+" has appeared! #\n"); 
             
             while(enemyHP > 0) {
-                System.out.println("\tYour health: "+playerHP); 
-                System.out.println("\t"+enemy+"'s health: "+enemyHP+"\n");
+                System.out.println("\t> Your health: "+playerHP); 
+                System.out.println("\t> "+enemy+"'s health: "+enemyHP+"\n");
                 System.out.println("\tWhat would you like to do?"); 
                 System.out.println("\t1. Attack");
                 System.out.println("\t2. Use Health Potion");
@@ -50,11 +50,19 @@ class game
                     enemyHP -= dmgDealt; 
                     playerHP -= dmgRecieved; 
 
-                    System.out.println("\t> You strike the "+enemy+" for "+dmgDealt+" damage!");
-                    System.out.println("\t> You took "+dmgRecieved+" damage!\n");
+                    if(dmgRecieved > 1) {
+                        System.out.println("\t> You took "+dmgRecieved+" damage!\n");
 
+                    } else if(dmgRecieved < 1) {
+                        System.out.println("\t> Fortunately the "+enemy+" didn't do any damage do you!\n");
+                    }
+                    if(dmgDealt > 1) {
+                        System.out.println("\t> You strike the "+enemy+" for "+dmgDealt+" damage!");   
+                    } else if (dmgDealt < 1) {
+                        System.out.println("\t> You strike but your attack fails to do any damage!");
+                    }
                     if(playerHP < 1) {
-                        System.out.println("\t> You have taken too much damage. You are too weak to go on!");
+                        System.out.println("\t> You lost all your health!\n\t> You lost to "+enemy+"!\n");
                         break; 
                     }
                 } 
@@ -67,11 +75,11 @@ class game
                         System.out.println("\t> You now have "+healthPotions+" health potions left.\n");
 
                     } else {
-                        System.out.println("\t> You do not have any health potions left! Please defeat an enemy for a chance to get one!");
+                        System.out.println("\t> You do not have any health potions left!\n\t> When you kill an enemy you have a 50% chance to get one!");
                     }
                 }
                 else if(ch == 3) {
-                    System.out.println("\t> You chose to run away from the "+enemy+"!");
+                    System.out.println("\t> You chose to run away from the "+enemy+"!\n\t> A new enemy now appears!");
                     continue GAME; 
                 }
                 else {
