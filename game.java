@@ -61,13 +61,13 @@ class game
                     enemyHP -= dmgDealt; 
                     playerHP -= dmgRecieved; 
 
-                    if(dmgRecieved > 1) {
+                    if(dmgRecieved >= 1) {
                         System.out.println("\t> You took "+dmgRecieved+" damage!");
 
                     } else if(dmgRecieved < 1) {
                         System.out.println("\t> Fortunately the "+enemy+" didn't do any damage do you!");
                     }
-                    if(dmgDealt > 1) {
+                    if(dmgDealt >= 1) {
                         System.out.println("\t> You strike the "+enemy+" for "+dmgDealt+" damage!");   
                     } else if (dmgDealt < 1) {
                         System.out.println("\t> You strike but your attack fails to do any damage!");
@@ -142,14 +142,15 @@ class game
             }
 
             if(ch1 == 1) {
-                System.out.println("You continue your adventure"); 
+                System.out.println("> You continue your adventure"); 
             } 
             else if(ch1 == 2) {
-                System.out.println("You exit the cave!");
+                System.out.println("> You exit the cave!");
+                System.out.println("Thanks for playing!"); 
                 break;  
             }
 
-            System.out.println("Thanks for playing!");          
+                     
            
         }               
     }
