@@ -20,6 +20,14 @@ class game
         int healthPotionHealAmt = 20; 
         int hpPotionsDropAmt = 50; 
 
+        // Grenade Varables 
+        int grenadeDmg  = 50; 
+        int playerGrenadeDmg = 30; 
+        int playerDmgChance = 15; 
+        int grenadeDropChance = 40; 
+        int grenades = 2; 
+
+        
         boolean running = true; 
         
         // Game
@@ -36,10 +44,13 @@ class game
             while(enemyHP > 0) {
                 System.out.println("\t> Your health: "+playerHP); 
                 System.out.println("\t> "+enemy+"'s health: "+enemyHP+"\n");
+                System.out.println("\t# INVENTORY #");
+                System.out.println("\tHealth potions: "+healthPotions+"\tGrenades: "+grenades+"\n");
                 System.out.println("\tWhat would you like to do?"); 
                 System.out.println("\t1. Attack");
                 System.out.println("\t2. Use Health Potion");
-                System.out.println("\t3. Run\n");
+                System.out.println("\t3. Use Grenade");
+                System.out.println("\t4. Run\n");
 
                 int ch = sc.nextInt();    
 
@@ -67,7 +78,7 @@ class game
                     }
                 } 
                 else if(ch == 2) {
-                    if( healthPotions > 1) {
+                    if( healthPotions >= 1) {
                         playerHP += healthPotionHealAmt; 
                         healthPotions--; 
                         System.out.println("\t> You drank a health potion! You now healed "+healthPotionHealAmt+" HP."); 
@@ -79,11 +90,25 @@ class game
                     }
                 }
                 else if(ch == 3) {
+                        if(grenades >= 1) {
+                            if(rd.nextInt(100) < playerDmgChance) {
+                                playerHP -= playerGrenadeDmg; 
+                                grenades--; 
+                                System.out.println("\t> You used a grenade but it fell to close to you!\n\t> You lost "+playerGrenadeDmg+" HP.");
+                            } else {
+                                enemyHP -= grenadeDmg; 
+                                grenades--;
+                                System.out.println("\t> You used a grenade and it was effective!\n\t> You dealt "+grenadeDmg+" HP.");                               
+                            }                         
+                        } else {
+                            System.out.println("\t> You do not have any grenades left!\n\t> When you kill an enemy you have a 40% chance to get one!");
+                        }
+                }
+                else if(ch == 4) {
                     System.out.println("\t> You chose to run away from the "+enemy+"!\n\t> A new enemy now appears!");
                     continue GAME; 
-                }
-                else {
-                    System.out.println("Invalid option!");
+                } else {
+                    System.out.println("Invalid option");
                 }
             }
 
@@ -98,6 +123,11 @@ class game
             if(rd.nextInt(100) < hpPotionsDropAmt) {
                 healthPotions++;
                 System.out.println("\tYou got lucky! The "+enemy+" dropped a health potion!\n\tYou now have "+healthPotions+" health potions left.");
+
+            }
+            if(rd.nextInt(100) < grenadeDropChance) {
+                grenades++;
+                System.out.println("\tYou got lucky! The "+enemy+" dropped a grenade!\n\tYou now have "+grenades+" grenades left.");
 
             }
             System.out.println("---------------------------------------------------");
@@ -121,7 +151,6 @@ class game
 
             System.out.println("Thanks for playing!");          
            
-        }       
-        
+        }               
     }
 }
