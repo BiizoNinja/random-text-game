@@ -1,9 +1,8 @@
 
-- PROJECT TITLE: 
-**CA Game**
+- PROJECT TITLE:\n**CA Game**
 
 - PURPOSE OF PROJECT: 
-This project is made by Saketh, Shashank and Srihari for the CA exhibition. 
+\nThis project is made by Saketh, Shashank and Srihari for the CA exhibition. 
 
 - VERSION or DATE: 1.0 
 - AUTHORS: Saketh, Shashank and Srihari
