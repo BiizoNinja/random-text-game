@@ -10,13 +10,13 @@ class game
         
         // Game Variables 
         String[] enemies = { "Skeleton", "Zombie", "Magician", "Titan", "Ghost"}; 
-        int maxEnemyHP = 80; 
-        int enemyDmg = 10; 
+        int maxEnemyHP = 100; 
+        int enemyDmg = 20; 
         
         // Player Variables 
         int playerHP = 100; 
-        int attackDmg = 15; 
-        int healthPotions = 5; 
+        int attackDmg = 25; 
+        int healthPotions = 3; 
         int healthPotionHealAmt = 20; 
         int hpPotionsDropAmt = 50; 
 
@@ -45,7 +45,7 @@ class game
                 System.out.println("\t> Your health: "+playerHP); 
                 System.out.println("\t> "+enemy+"'s health: "+enemyHP+"\n");
                 System.out.println("\t# INVENTORY #");
-                System.out.println("\tHealth potions: "+healthPotions+"\tGrenades: "+grenades+"\n");
+                System.out.println("\t* Health potions: "+healthPotions+"\n\t* Grenades: "+grenades+"\n");
                 System.out.println("\tWhat would you like to do?"); 
                 System.out.println("\t1. Attack");
                 System.out.println("\t2. Use Health Potion");
@@ -127,7 +127,7 @@ class game
             }
             if(rd.nextInt(100) < grenadeDropChance) {
                 grenades++;
-                System.out.println("\t> You got lucky! The "+enemy+" dropped a grenade!\n\t- You now have "+grenades+" grenades left.");
+                System.out.println("\t> You got lucky! The "+enemy+" dropped a grenade!\n\t- You now have "+grenades+" grenades left.\n");
 
             }
             System.out.println("---------------------------------------------------");
