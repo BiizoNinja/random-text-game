@@ -23,7 +23,7 @@ class game
         // Grenade Varables 
         int grenadeDmg  = 50; 
         int playerGrenadeDmg = 30; 
-        int playerDmgChance = 15; 
+        int playerDmgChance = 25; 
         int grenadeDropChance = 40; 
         int grenades = 2; 
 
@@ -62,10 +62,10 @@ class game
                     playerHP -= dmgRecieved; 
 
                     if(dmgRecieved > 1) {
-                        System.out.println("\t> You took "+dmgRecieved+" damage!\n");
+                        System.out.println("\t> You took "+dmgRecieved+" damage!");
 
                     } else if(dmgRecieved < 1) {
-                        System.out.println("\t> Fortunately the "+enemy+" didn't do any damage do you!\n");
+                        System.out.println("\t> Fortunately the "+enemy+" didn't do any damage do you!");
                     }
                     if(dmgDealt > 1) {
                         System.out.println("\t> You strike the "+enemy+" for "+dmgDealt+" damage!");   
@@ -118,16 +118,16 @@ class game
             }
 
             System.out.println("---------------------------------------------------");
-            System.out.println("\t"+enemy+" was defeated!");
-            System.out.println("\tYou have "+playerHP+" HP left!"); 
+            System.out.println("\n\t"+enemy+" was defeated!");
+            System.out.println("\tYou have "+playerHP+" HP left!\n"); 
             if(rd.nextInt(100) < hpPotionsDropAmt) {
                 healthPotions++;
-                System.out.println("\tYou got lucky! The "+enemy+" dropped a health potion!\n\tYou now have "+healthPotions+" health potions left.");
+                System.out.println("\t> You got lucky! The "+enemy+" dropped a health potion!\n\t- You now have "+healthPotions+" health potions left.\n");
 
             }
             if(rd.nextInt(100) < grenadeDropChance) {
                 grenades++;
-                System.out.println("\tYou got lucky! The "+enemy+" dropped a grenade!\n\tYou now have "+grenades+" grenades left.");
+                System.out.println("\t> You got lucky! The "+enemy+" dropped a grenade!\n\t- You now have "+grenades+" grenades left.");
 
             }
             System.out.println("---------------------------------------------------");
