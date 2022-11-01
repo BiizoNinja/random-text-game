@@ -11,12 +11,12 @@ class game
         // Game Variables 
         String[] enemies = { "Skeleton", "Zombie", "Magician", "Titan", "Ghost"}; 
         int maxEnemyHP = 100; 
-        int enemyDmg = 20; 
-        
-        // Player Variables 
+        int enemyDmg = 20;  
         int playerHP = 100; 
         int attackDmg = 25; 
-        int healthPotions = 3; 
+
+        // Health Potion Variables
+        int healthPotions = 5; 
         int healthPotionHealAmt = 20; 
         int hpPotionsDropAmt = 50; 
 
@@ -25,9 +25,14 @@ class game
         int playerGrenadeDmg = 30; 
         int playerDmgChance = 25; 
         int grenadeDropChance = 40; 
-        int grenades = 2; 
+        int grenades = 3; 
 
-        
+        // Sword Variables 
+        int swordDmg = 100; 
+        int swordFailChance = 70; 
+        int swordUses = 2;
+        int swordUseDropChance = 25; 
+
         boolean running = true; 
         
         // Game
@@ -44,13 +49,10 @@ class game
             while(enemyHP > 0) {
                 System.out.println("\t> Your health: "+playerHP); 
                 System.out.println("\t> "+enemy+"'s health: "+enemyHP+"\n");
-                System.out.println("\t# INVENTORY #");
-                System.out.println("\t* Health potions: "+healthPotions+"\n\t* Grenades: "+grenades+"\n");
                 System.out.println("\tWhat would you like to do?"); 
                 System.out.println("\t1. Attack");
-                System.out.println("\t2. Use Health Potion");
-                System.out.println("\t3. Use Grenade");
-                System.out.println("\t4. Run\n");
+                System.out.println("\t2. Inventory");
+                System.out.println("\t3. Run\n");
 
                 int ch = sc.nextInt();    
 
@@ -78,18 +80,28 @@ class game
                     }
                 } 
                 else if(ch == 2) {
-                    if( healthPotions >= 1) {
-                        playerHP += healthPotionHealAmt; 
-                        healthPotions--; 
-                        System.out.println("\t> You drank a health potion! You now healed "+healthPotionHealAmt+" HP."); 
-                        System.out.println("\t> Your health is now "+playerHP+" HP.");
-                        System.out.println("\t> You now have "+healthPotions+" health potions left.\n");
+                    System.out.println("\t# INVENTORY #");
+                    System.out.println("\t* Health potions: "+healthPotions+"\n\t* Grenades: "+grenades+"\n\t* Sword Uses: "+swordUses+"\n");
+                    System.out.println("\tWhat would you like to use?"); 
+                    System.out.println("\t1. Health Potion\n\t2. Grenade\n\t3. Sword");
+                    int ch_ = sc.nextInt(); 
 
-                    } else {
-                        System.out.println("\t> You do not have any health potions left!\n\t> When you kill an enemy you have a 50% chance to get one!");
-                    }
-                }
-                else if(ch == 3) {
+                    switch(ch_)
+                    {
+                        case 1: 
+                        if(healthPotions >= 1) {
+                            playerHP += healthPotionHealAmt; 
+                            healthPotions--; 
+                            System.out.println("\t> You drank a health potion! You now healed "+healthPotionHealAmt+" HP."); 
+                            System.out.println("\t> Your health is now "+playerHP+" HP.");
+                            System.out.println("\t> You now have "+healthPotions+" health potions left.\n");
+    
+                        } else {
+                            System.out.println("\t> You do not have any health potions left!\n\t> When you kill an enemy you have a 50% chance to get one!");
+                        }
+                        break; 
+
+                        case 2:
                         if(grenades >= 1) {
                             if(rd.nextInt(100) < playerDmgChance) {
                                 playerHP -= playerGrenadeDmg; 
@@ -102,7 +114,29 @@ class game
                             }                         
                         } else {
                             System.out.println("\t> You do not have any grenades left!\n\t> When you kill an enemy you have a 40% chance to get one!");
+                        
+
                         }
+                        break; 
+
+                        case 3: 
+                        if(swordUses >= 1) {
+                            if(rd.nextInt(100) < swordFailChance) {
+                                swordUses--; 
+                                System.out.println("\t> You used the sword but your attack fails to do any damage!");
+                            } else {
+                                enemyHP -= swordDmg; 
+                                swordUses--; 
+                                System.out.println("\t> You used the sword and it instantly eliminated the "+enemy+"!");
+                            }
+                        } else {
+                            System.out.println("\t> Your sword doesn't have any uses left! When you kill an enemy there is a 25% chance your sword gets fired up to one use!");
+                        }
+                        break; 
+
+                        default:
+                        System.out.println("Invalid option!");
+                    }
                 }
                 else if(ch == 4) {
                     System.out.println("\t> You chose to run away from the "+enemy+"!\n\t> A new enemy now appears!");
@@ -130,6 +164,11 @@ class game
                 System.out.println("\t> You got lucky! The "+enemy+" dropped a grenade!\n\t- You now have "+grenades+" grenades left.\n");
 
             }
+            if(rd.nextInt(100) < swordUseDropChance) {
+                swordUses++;
+                System.out.println("\t> You got lucky! Because you killed the "+enemy+" your sword was fired up to 1 use!\n\t- You now have "+swordUses+" Sword uses left.\n");
+
+            }        
             System.out.println("---------------------------------------------------");
             System.out.println("What would you like to do now?"); 
             System.out.println("1. Continue fighting\n2. Exit the cave"); 
@@ -148,10 +187,7 @@ class game
                 System.out.println("> You exit the cave!");
                 System.out.println("Thanks for playing!"); 
                 break;  
-            }
-
-                     
-           
+            }                           
         }               
     }
 }
