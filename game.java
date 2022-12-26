@@ -12,6 +12,8 @@ class game
         String[] enemies = { "Skeleton", "Zombie", "Magician", "Titan", "Ghost"}; 
         String[] ores = {"Diamond", "Ruby", "Gold", "Platinum", "Emerald"}; 
         int money = 0; 
+        boolean game = true; 
+
 
        // Fight variables
         int fightMoneyEarned = rd.nextInt(250); 
@@ -19,8 +21,6 @@ class game
         int enemyDmg = 20;  
         int playerHP = 100; 
         int attackDmg = 25; 
-        boolean running = true;
-        boolean game = true; 
 
         // Health Potion Variables
         int healthPotions = 5; 
@@ -41,8 +41,9 @@ class game
         int swordUseDropChance = 25; 
 
         // Mining Variables 
-        int energy = 80;  
+        double energy = 100.0;  
         int oresMined = 0; 
+        int maxOreHP = 10; 
 
         // Energy Potion Variables
         int enrgPotions = 3; 
@@ -56,9 +57,9 @@ class game
         System.out.println("\t> What would you like to do?"); 
         System.out.println("\t1. Fight monsters\n\t2. Mining for ores\n\t3. Buy/Sell ttems from the shop\n\t4. Exit the game");
         int h = sc.nextInt(); 
-
         if(h == 1) {
 
+            // If player chooses one it will open the fight menu and executes the fighting loop
             fighting:
             while(playerHP != 0 ) {
                 System.out.println("---------------------------------------------------"); 
@@ -111,11 +112,16 @@ class game
                         {
                             case 1: 
                             if(healthPotions >= 1) {
-                                playerHP += healthPotionHealAmt; 
-                                healthPotions--; 
-                                System.out.println("\t> You drank a health potion! You now healed "+healthPotionHealAmt+" HP."); 
-                                System.out.println("\t> Your health is now "+playerHP+" HP.");
-                                System.out.println("\t> You now have "+healthPotions+" health potions left.\n");
+                                if(playerHP < 100) {
+                                    playerHP += healthPotionHealAmt; 
+                                    healthPotions--; 
+                                    System.out.println("\t> You drank a health potion! You now healed "+healthPotionHealAmt+" HP."); 
+                                    System.out.println("\t> Your health is now "+playerHP+" HP.");
+                                    System.out.println("\t> You now have "+healthPotions+" health potions left.\n");
+                                }
+                                else {
+                                 System.out.println("\t> You are healed up to the maximum amount. Go and fight monsters!");
+                                }
         
                             } else {
                                 System.out.println("\t> You do not have any health potions left!\n\t> When you kill an enemy you have a 50% chance to get one!");
@@ -159,7 +165,7 @@ class game
                             System.out.println("Invalid option!");
                         }
                     }
-                    else if(ch == 4) {
+                    else if(ch == 3) {
                         System.out.println("\t> You chose to run away from the "+enemy+"!\n\t> A new enemy now appears!");
                         continue fighting; 
                     } else {
@@ -214,12 +220,100 @@ class game
                     break fighting;                            
                     }               
                 }
+            else if(h == 2) {
+                // If player chooses one it will open the fight menu and executes the fighting loop
+                mining: 
+                while(energy != 0) {
+                    System.out.println("---------------------------------------------------"); 
+                    int oreHP = rd.nextInt(maxOreHP);
+                    String ore = ores[rd.nextInt(ores.length)];
+                    System.out.println("\t# You spot a "+ore+" ore! #\n");
+                    while (oreHP > 1) {
+                        System.out.println("\t> "+ore+"'s durability: "+oreHP+"\n\t> Your energy "+energy+" energy points");
+                        System.out.println("\tWhat would you like to do?"); 
+                        System.out.println("\t1. Mine");
+                        System.out.println("\t2. Use energy potion");
+                        System.out.println("\t3. Leave\n");
+                        // Variable for choice
+                        int mch = sc.nextInt(); 
+    
+                        if(mch == 1) {
+                            int nrgLost = rd.nextInt(10); 
+        
+                            energy -= nrgLost; 
+                            oreHP -= 1;
+                            
+                            if(nrgLost >= 1) {
+                                System.out.println("\t> You lost "+nrgLost+" energy!\n\t> You now have "+energy+" energy points energy left");
+                            }
+                                System.out.println("\t> You strike the "+ore+" for 1 durability!\n");   
+                            if(energy < 1) {
+                                System.out.println("\t> You dont have enough energy to continue mining!\n");
+                                break mining; 
+                            }
+                        }
+                        else if(mch == 2) {
+                            if(enrgPotions >= 1 ) {
+                                if(energy < 100.0) {
+                            
+                                  enrgPotions -= 1; 
+                                  energy += enrgPotionHealAmt; 
+                                  System.out.println("\t> You used a energy potion and gained 10 energy points\n\t> You now have "+energy+" energy points left and have "+enrgPotions+" potions left!");
+                                } else {
+                                    System.out.println("\t> You have the maximum amount of enery points. Go mine for ores!"); 
+                                }
+                            } else {
+                            System.out.println("\t>You don't have any energy potions left!");
+                        }
+                    } else if(mch == 3) {
+                        System.out.println("\t> You chose to leave the "+ore+" ore unmined!");
+                    } else {
+                        System.out.println("INVALID OPTION!");
+                    }                   
+                }
+                if(energy < 1) {
+                    System.out.println("\t> You stopped mining because you ran out of energy.");
+                    break; 
+                }
+                System.out.println("---------------------------------------------------");
+                System.out.println("\n\t"+ore+" was mined!");
+                System.out.println("\tYou have "+energy+" energy points left!"); 
+                oresMined += 1; 
+                System.out.println("\tYou have mined "+oresMined+" ores!\n"); 
+                if(rd.nextInt(100) < enrgPotionsDropAmt) {
+                    enrgPotions++;
+                    System.out.println("\t> You got lucky! The "+ore+" dropped an energy potion!\n\t- You now have "+enrgPotions+" energy potions left.\n");
+    
+                }
+                System.out.println("What would you like to do now?"); 
+                System.out.println("1. Continue mining\n2. Exit the game"); 
+    
+                int ch2 = sc.nextInt(); 
+    
+                while(ch2 != 1 && ch2 != 2) {
+                    System.out.println("Invalid choice! Please input again."); 
+                    ch2 = sc.nextInt();
+                }
+    
+                if(ch2 == 1) {
+                    System.out.println("> You continue your adventure"); 
+                } 
+                else if(ch2 == 2) {
+                    System.out.println("> You exit the game!\n"); 
+                    }
+                    break mining;                            
+                    } 
+                    
 
-            else if(h == 4) {
-                System.out.println("> You exit the game! Thanks for playing");
-                break GAME; 
+                }  
+                else if(h == 4) {
+                    System.out.println("> You exit the game! Thanks for playing");
+                    break GAME;     
             } 
+            
         }
+        
     }
-
 }
+
+
