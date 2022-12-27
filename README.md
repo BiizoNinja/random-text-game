@@ -14,7 +14,7 @@ This is a random text based game made in java by [@Biizo](https://github.com/Bii
 - Download the project and open it with BlueJ
 
 ### Screenshot ###
-![Screenshot 1](/assets/img/screenshot_1.png)
-![Screenshot 2](/assets/img/screenshot_2.png)
-![Screenshot 3](/assets/img/screenshot_3.png)
+![Screenshot 1](/assets/screenshot_1.png)
+![Screenshot 2](/assets/screenshot_2.png)
+![Screenshot 3](/assets/screenshot_3.png)
 
