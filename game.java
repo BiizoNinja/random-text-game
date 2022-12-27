@@ -395,8 +395,26 @@ class game
                     } 
                 }
                 else if(sch == 2) {
+                    y: 
+                    while(true) {
+                        System.out.println("---------------------------------------------------");
+                        System.out.println("\t# Sell ores menu! #");
+                        System.out.println("\t> Ores mined :"+oresMined+" - $25 Each\n\n\t> How many ores would you like to sell?");
+                        int n = sc.nextInt(); 
+                        
+                        if(oresMined < n ) {
+                            System.out.println("\t> You don't have that many ores to sell!");
+                            continue y; 
+                        }   else {
+                            oresMined -= n; 
+                            money += n*25; 
 
+                            System.out.println("\t> You successfully sold "+n+" ores and earned $"+n*25+"!");
+                            break; 
+                        }
+                    }
                 }
+
                 else if(sch == 3 ){
                     System.out.println("\t> You exit the shop!");
                     break shop; 
